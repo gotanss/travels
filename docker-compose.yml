@@ -1,0 +1,17 @@
+services:
+  travel-api:
+    container_name: travel-api
+    image: jchire/travel-api
+    ports:
+      - "8080:8080"
+    networks:
+      - postgres
+    restart: unless-stopped
+
+networks:
+  postgres:
+    driver: bridge
+
+volumes:
+  postgres:
+  pgadmin:
