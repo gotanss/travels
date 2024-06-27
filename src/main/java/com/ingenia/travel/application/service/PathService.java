@@ -16,7 +16,7 @@ import com.ingenia.travel.domain.exception.PathDuplicateException;
 import com.ingenia.travel.domain.exception.PathNotFoundException;
 import com.ingenia.travel.domain.model.Path;
 import com.ingenia.travel.infrastructure.adapters.input.rest.model.response.ShortPathResponse;
-import com.ingenia.travel.infrastructure.adapters.output.persitence.mapper.PathPersistenceMapper;
+import com.ingenia.travel.infrastructure.adapters.output.persistence.mapper.PathPersistenceMapper;
 
 import lombok.AllArgsConstructor;
 
@@ -43,11 +43,7 @@ public class PathService implements PathServicePort {
       if (!pathPersistencePort.findByStationIds(path.getSourceId(), path.getDestinationId()).isEmpty()) {
          throw new PathDuplicateException();
       }
-      Path pathReverse = Path.builder()
-            .cost(path.getCost())
-            .sourceId(path.getDestinationId())
-            .destinationId(path.getSourceId())
-            .build();
+      Path pathReverse = Path.builder().cost(path.getCost()).sourceId(path.getDestinationId()).destinationId(path.getSourceId()).build();
       pathPersistencePort.save(pathReverse);
       return pathPersistencePort.save(path);
    }
@@ -73,7 +69,7 @@ public class PathService implements PathServicePort {
    @Override
    public ShortPathResponse findShortPathById(Long sourceId, Long destinationId) {
       ShortPathResponse paths = findShortestPath(sourceId, destinationId);
-//      ShortPathResponse shortPathResponse = ShortPathResponse.builder().paths(paths).cost(0.0).build();
+      //      ShortPathResponse shortPathResponse = ShortPathResponse.builder().paths(paths).cost(0.0).build();
       return paths;
    }
 
@@ -106,11 +102,11 @@ public class PathService implements PathServicePort {
          }
       }
 
-//      return Collections.emptyList(); // Si no se encuentra un camino
+      //      return Collections.emptyList(); // Si no se encuentra un camino
       return ShortPathResponse.builder().build(); // Si no se encuentra un camino
    }
 
-   private ShortPathResponse reconstructPath(Map<Long, Long> previous, Long sourceId,Long destinationId) {
+   private ShortPathResponse reconstructPath(Map<Long, Long> previous, Long sourceId, Long destinationId) {
       List<Path> paths = new ArrayList<>();
       List<Long> pathIds = new ArrayList<>();
       pathIds.add(destinationId);
@@ -127,7 +123,7 @@ public class PathService implements PathServicePort {
 
       Collections.reverse(paths);
       Collections.reverse(pathIds);
-//      return paths;
+      //      return paths;
 
       ShortPathResponse shortPathResponse = ShortPathResponse.builder().pathIds(pathIds).cost(costoTotal).build();
       return shortPathResponse;

@@ -9,7 +9,7 @@ import com.ingenia.travel.application.ports.output.StationPersistencePort;
 import com.ingenia.travel.domain.exception.StationDuplicateException;
 import com.ingenia.travel.domain.exception.StationNotFoundException;
 import com.ingenia.travel.domain.model.Station;
-import com.ingenia.travel.infrastructure.adapters.output.persitence.mapper.StationPersistenceMapper;
+import com.ingenia.travel.infrastructure.adapters.output.persistence.mapper.StationPersistenceMapper;
 
 import lombok.AllArgsConstructor;
 
